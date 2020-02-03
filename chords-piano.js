@@ -1,3 +1,10 @@
+var KEYBOARDS = {
+	"triad": "wbwbwwbwbwbwwb",
+	"inversions": [
+		"bwwbwbwbwwbwbw", "bwbwbwwbwbwwbwb"
+	]
+};
+
 var CHORDS = [
 	{
 		"chord": "C", "triad": [ 0, 4, 7 ],
