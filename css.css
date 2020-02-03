@@ -1,0 +1,48 @@
+body {
+	font-family: Arial;
+	color: #222;
+}
+
+table {
+	margin: auto;
+}
+
+table:not(:last-child) {
+	padding-bottom: 60px;
+}
+
+/*
+@media not print {
+	tbody {
+		background-color: #9ACD32;
+	}
+	th {
+		text-shadow: 1px 1px 1px #444444DD
+	}
+}
+*/
+
+th {
+	font-size: 28pt;
+	padding-bottom: 15px;
+	color: #FFC107;
+}
+
+td {
+	padding: 0;
+	margin: 0;
+}
+
+tfoot td {
+	text-align: center;
+	padding-top: 10px;
+	letter-spacing: 5px;
+}
+
+tfoot td span {
+	letter-spacing: initial;
+}
+
+td:not(:last-child) {
+	padding-right: 30px;
+}
