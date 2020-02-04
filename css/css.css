@@ -8,7 +8,7 @@ table {
 }
 
 table:not(:last-child) {
-	padding-bottom: 60px;
+	margin-bottom: 30px;
 }
 
 /*
