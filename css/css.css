@@ -1,6 +1,7 @@
 body {
 	font-family: Arial;
 	color: #222;
+	/* opacity: 0.75; */
 }
 
 table {
@@ -8,7 +9,7 @@ table {
 }
 
 table:not(:last-child) {
-	margin-bottom: 30px;
+	margin-bottom: 50px;
 }
 
 /*
@@ -24,25 +25,31 @@ table:not(:last-child) {
 
 th {
 	font-size: 28pt;
-	padding-bottom: 15px;
+	padding-bottom: 5px;
 	color: #FFC107;
 }
 
 td {
-	padding: 0;
+	padding: 0 20px;
 	margin: 0;
+	text-align: center;
+}
+
+td.bold {
+	font-weight: bold;
 }
 
 tfoot td {
 	text-align: center;
-	padding-top: 10px;
-	letter-spacing: 5px;
+	padding-top: 5px;
+	letter-spacing: 15px;
+	font-size: 14pt;
 }
 
 tfoot td span {
 	letter-spacing: initial;
 }
 
-td:not(:last-child) {
-	padding-right: 30px;
+tfoot td span.italic {
+	text-decoration: underline overline;
 }
