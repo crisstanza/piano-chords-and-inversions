@@ -9,7 +9,7 @@ a:hover { text-decoration: underline; }
 
 header {
 	padding-bottom: 40px;
-	font-size: 10pt;
+	font-size: 11pt;
 	opacity: 0.75;
 }
 
@@ -19,7 +19,7 @@ footer.center, header.center { text-align: center; }
 
 .center { margin: auto; }
 div.center { text-align: center; }
-.github-icon { top: 2px; position: relative; opacity: 0.25; }
+.github-icon { top: 2px; position: relative; opacity: 0.3; }
 
 table {
 	margin: auto;
