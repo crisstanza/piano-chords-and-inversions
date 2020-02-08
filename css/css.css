@@ -4,6 +4,20 @@ body {
 	/* opacity: 0.75; */
 }
 
+header {
+	padding-bottom: 30px;
+	font-size: 10pt;
+	opacity: 0.75;
+}
+
+footer { padding-top: 45px; }
+
+footer.center, header.center { text-align: center; }
+
+.center { margin: auto; }
+div.center { text-align: center; }
+.github-icon { top: 2px; position: relative; opacity: 0.3; }
+
 table {
 	margin: auto;
 }
