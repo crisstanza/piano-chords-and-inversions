@@ -4,26 +4,29 @@ body {
 	/* opacity: 0.75; */
 }
 
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
 header {
-	padding-bottom: 30px;
+	padding-bottom: 40px;
 	font-size: 10pt;
 	opacity: 0.75;
 }
 
-footer { padding-top: 45px; }
+footer { padding-top: 80px; }
 
 footer.center, header.center { text-align: center; }
 
 .center { margin: auto; }
 div.center { text-align: center; }
-.github-icon { top: 2px; position: relative; opacity: 0.3; }
+.github-icon { top: 2px; position: relative; opacity: 0.25; }
 
 table {
 	margin: auto;
 }
 
 table:not(:last-child) {
-	margin-bottom: 50px;
+	margin-bottom: 70px;
 }
 
 /*

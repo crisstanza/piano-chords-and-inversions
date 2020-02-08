@@ -75,7 +75,7 @@
 	}
 
 	function drawTriad(parentRow, triad, root) {
-		let className = NOTES[triad[0] % 12] == root ? 'bold' : '';
+		let className = NOTES[triad[0] % 12][0] == root[0] ? 'bold' : '';
 		let col = CREATOR.create('td', {class: className}, parentRow);
 		for (let i = 0 ; i < triad.length ; i++) {
 			let note = triad[i];
