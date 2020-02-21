@@ -1,0 +1,72 @@
+body {
+	font-family: Arial;
+	color: #222;
+	/* opacity: 0.75; */
+}
+
+a { text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+header {
+	padding-bottom: 40px;
+	font-size: 11pt;
+	opacity: 0.75;
+}
+
+footer { padding-top: 80px; }
+
+footer.center, header.center { text-align: center; }
+
+.center { margin: auto; }
+div.center { text-align: center; }
+.github-icon { top: 2px; position: relative; opacity: 0.3; }
+
+table {
+	margin: auto;
+}
+
+table:not(:last-child) {
+	margin-bottom: 50px;
+}
+
+/*
+@media not print {
+	tbody {
+		background-color: #66666622;
+	}
+	th {
+		text-shadow: 1px 1px 1px #444444DD
+	}
+}
+*/
+
+th {
+	font-size: 28pt;
+	padding-bottom: 10px;
+	color: #FFC107;
+}
+
+td {
+	padding: 10px 20px 0 20px;
+	margin: 0;
+	text-align: center;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+td.note-name {
+	text-align: center;
+	padding: 5px 0 20px 0;
+	letter-spacing: 15px;
+	font-size: 14pt;
+}
+
+td.note-name span {
+	letter-spacing: initial;
+}
+
+td.note-name span.italic {
+	text-decoration: underline overline;
+}
