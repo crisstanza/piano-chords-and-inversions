@@ -26,7 +26,7 @@ table {
 }
 
 table:not(:last-child) {
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 
 /*
@@ -47,7 +47,7 @@ th {
 }
 
 td {
-	padding: 10px 20px 0 20px;
+	padding: 5px 20px 0 20px;
 	margin: 0;
 	text-align: center;
 }

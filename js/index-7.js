@@ -79,10 +79,9 @@
 		}
 	}
 
-	function drawNotesLine(notesLine, keyboards, j, bodyRow) {
-		let keyboardLine = keyboards[j];
-		for (let i = 0 ; i < keyboardLine.length ; i++) {
-			let keyboard = keyboardLine[i];
+	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards) {
+		for (let i = 0 ; i < notesLine.length ; i++) {
+			let keyboard = keyboards[chordKeyboards[i][0]][chordKeyboards[i][1]];
 			let col = CREATOR.create('td', {}, bodyRow);
 			let svg = CREATOR.create.svg('svg', {height: KEY_WHITE_HEIGHT + 2}, col);
 			drawKeyboard(keyboard, col, svg)
@@ -100,7 +99,7 @@
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			drawNotesLine(notesLine, keyboards, i, bodyRow);
+			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards[i]);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			let notesNamesLine = chord.names[i];
 			drawNotesNameLine(notesNamesLine, footRow, chord.chord[0]);
@@ -121,7 +120,7 @@
 		draw(CHORDS, KEYBOARDS);
 	}
 
-	function log(x) { console.log(x); }
+	function log() { console.log(arguments); }
 	function window_HashChange(event) { var hash = document.location.hash; }
 	function window_Load(event) { init(event); }
 
