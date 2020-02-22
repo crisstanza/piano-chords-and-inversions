@@ -64,24 +64,32 @@
 		}
 	}
 
-	function drawNotesNameLine(notesNameLine, footRow, root) {
-		for (let i = 0 ; i < notesNameLine.length ; i++) {
-			let notesName = notesNameLine[i];
-			let col = CREATOR.create('td', {class: 'note-name'}, footRow);
-			for (let i = 0 ; i < notesName.length ; i++) {
-				let note = notesName[i];
-				let names = note > 0 ? NOTES_SHARP : NOTES_BEMOL;
-				note = Math.abs(note);
-				let noteName = names[note % 12];
-				let className = noteName[0] == root[0] ? 'bold' : '';
-				col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
+	function drawNotesNameLine(chordNotesName, footRow, root, inversionIndexPerLine, notesLineLength) {
+		for (let i = 0 ; i < notesLineLength ; i++) {
+			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
+			if (keyboardIndex < chordNotesName.length) {
+				let notesName = chordNotesName[keyboardIndex];
+				let col = CREATOR.create('td', {class: 'note-name'}, footRow);
+				for (let i = 0 ; i < notesName.length ; i++) {
+					let note = notesName[i];
+					if (note == '_') {
+						col.innerHTML += '<span class="blank">___</span> ';
+					} else {
+						let names = note > 0 ? NOTES_SHARP : NOTES_BEMOL;
+						note = Math.abs(note);
+						let noteName = names[note % 12];
+						let className = noteName[0] == root[0] ? 'bold' : '';
+						col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
+					}
+				}
 			}
 		}
 	}
 
-	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards) {
+	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength) {
 		for (let i = 0 ; i < notesLine.length ; i++) {
-			let keyboard = keyboards[chordKeyboards[i][0]][chordKeyboards[i][1]];
+			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
+			let keyboard = keyboards[chordKeyboards[keyboardIndex]];
 			let col = CREATOR.create('td', {}, bodyRow);
 			let svg = CREATOR.create.svg('svg', {height: KEY_WHITE_HEIGHT + 2}, col);
 			drawKeyboard(keyboard, col, svg)
@@ -99,10 +107,9 @@
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards[i]);
+			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length);
 			let footRow = tBody.insertRow(tBody.rows.length);
-			let notesNamesLine = chord.names[i];
-			drawNotesNameLine(notesNamesLine, footRow, chord.chord[0]);
+			drawNotesNameLine(chord.names, footRow, chord.chord[0], i, notesLine.length);
 		}
 		main.appendChild(table);
 	}
