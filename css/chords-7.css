@@ -1,0 +1,7 @@
+table:not(:last-child) {
+	margin-bottom: 35px;
+}
+
+th {
+	padding-bottom: 5px;
+}

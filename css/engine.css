@@ -8,12 +8,12 @@ a { text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 header {
-	padding-bottom: 40px;
+	padding-bottom: 10px;
 	font-size: 12pt;
 	opacity: 0.75;
 }
 
-footer { padding-top: 80px; }
+footer { padding-top: 10px; }
 
 footer.center, header.center { text-align: center; }
 
@@ -23,10 +23,6 @@ div.center { text-align: center; }
 
 table {
 	margin: auto;
-}
-
-table:not(:last-child) {
-	margin-bottom: 35px;
 }
 
 /*
@@ -42,7 +38,6 @@ table:not(:last-child) {
 
 th {
 	font-size: 28pt;
-	padding-bottom: 5px;
 	color: #795548;
 }
 
