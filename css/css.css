@@ -43,7 +43,7 @@ table:not(:last-child) {
 th {
 	font-size: 28pt;
 	padding-bottom: 5px;
-	color: #FFC107;
+	color: #795548;
 }
 
 td {
