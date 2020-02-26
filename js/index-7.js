@@ -2,13 +2,15 @@
 
 	let CREATOR;
 
-	let KEY_WHITE_WIDTH = 30;
-	let KEY_BLACK_WIDTH = 20;
+	let KEY_WHITE_WIDTH = 28;
+	let KEY_BLACK_WIDTH = 18;
 
-	let KEY_WHITE_HEIGHT = 80;
-	let KEY_BLACK_HEIGHT = 50;
+	let KEY_WHITE_HEIGHT = 72;
+	let KEY_BLACK_HEIGHT = 42;
 
 	let KEY_CURRENT_RADIUS = 6;
+
+	let NOTE_NAME_BLANK = '____';
 
 	function drawNotes(notes, keyboard, svg) {
 		let delta = keyboard[0] == 'w' ? 0 : KEY_BLACK_WIDTH / 2;
@@ -73,7 +75,7 @@
 				for (let i = 0 ; i < notesName.length ; i++) {
 					let note = notesName[i];
 					if (note == '_') {
-						col.innerHTML += '<span class="blank">___</span> ';
+						col.innerHTML += '<span class="blank">' + NOTE_NAME_BLANK + '</span> ';
 					} else {
 						let names = note > 0 ? NOTES_SHARP : NOTES_BEMOL;
 						note = Math.abs(note);

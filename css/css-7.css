@@ -9,7 +9,7 @@ a:hover { text-decoration: underline; }
 
 header {
 	padding-bottom: 40px;
-	font-size: 11pt;
+	font-size: 12pt;
 	opacity: 0.75;
 }
 
@@ -26,7 +26,7 @@ table {
 }
 
 table:not(:last-child) {
-	margin-bottom: 20px;
+	margin-bottom: 35px;
 }
 
 /*
@@ -42,7 +42,7 @@ table:not(:last-child) {
 
 th {
 	font-size: 28pt;
-	padding-bottom: 10px;
+	padding-bottom: 5px;
 	color: #FFC107;
 }
 
@@ -58,13 +58,18 @@ td {
 
 td.note-name {
 	text-align: center;
-	padding: 5px 0 20px 0;
+	padding: 5px 0 15px 0;
 	letter-spacing: 15px;
 	font-size: 14pt;
 }
 
 td.note-name span {
 	letter-spacing: initial;
+}
+
+td.note-name span.blank {
+	position: relative;
+	bottom: -6px;
 }
 
 td.note-name span.italic {
