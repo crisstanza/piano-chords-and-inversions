@@ -1,8 +1,3 @@
-var KEYBOARDS = [
-	"wbwbwwbwbwbw", "wbwbwwbwbwbwwbwbw", "wbwbwbwwbwbw",
-	"wbwbwbwwbwbwwbwbwbw"
-];
-
 var CHORDS = [
 	{
 		"chord": "C7",

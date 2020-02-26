@@ -9,7 +9,7 @@ a:hover { text-decoration: underline; }
 
 header {
 	padding-bottom: 40px;
-	font-size: 11pt;
+	font-size: 12pt;
 	opacity: 0.75;
 }
 
@@ -26,13 +26,13 @@ table {
 }
 
 table:not(:last-child) {
-	margin-bottom: 70px;
+	margin-bottom: 35px;
 }
 
 /*
 @media not print {
 	tbody {
-		background-color: #9ACD32;
+		background-color: #66666622;
 	}
 	th {
 		text-shadow: 1px 1px 1px #444444DD
@@ -47,26 +47,31 @@ th {
 }
 
 td {
-	padding: 0 20px;
+	padding: 5px 20px 0 20px;
 	margin: 0;
 	text-align: center;
 }
 
-td.bold {
+.bold {
 	font-weight: bold;
 }
 
-tfoot td {
+td.note-name {
 	text-align: center;
-	padding-top: 5px;
+	padding: 5px 0 15px 0;
 	letter-spacing: 15px;
 	font-size: 14pt;
 }
 
-tfoot td span {
+td.note-name span {
 	letter-spacing: initial;
 }
 
-tfoot td span.italic {
+td.note-name span.blank {
+	position: relative;
+	bottom: -6px;
+}
+
+td.note-name span.italic {
 	text-decoration: underline overline;
 }
