@@ -25,6 +25,11 @@ table {
 	margin: auto;
 }
 
+table.highlight {
+	border: 1px solid gray;
+	background-color: aliceblue;
+}
+
 /*
 @media not print {
 	tbody {
@@ -53,7 +58,7 @@ td {
 
 td.note-name {
 	text-align: center;
-	padding: 5px 0 15px 0;
+	padding-top: 5px;
 	letter-spacing: 15px;
 	font-size: 14pt;
 }

@@ -1,5 +1,11 @@
 table:not(:last-child) {
-	margin-bottom: 0;
+	padding-bottom: 5px;
+	margin-bottom: 5px;
+}
+
+table:not(:first-child) {
+	padding-top: 5px;
+	margin-top: 5px;
 }
 
 th {

@@ -132,14 +132,41 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 		}
 	}
 
+	function highlightFromHash(chord) {
+		let tables = main.querySelectorAll('table');
+		let length = tables.length;
+		for (let i = 0 ; i < length ; i++) {
+			let table = tables[i];
+			let currentChord = table.querySelector('th').innerHTML;
+			if (currentChord == chord) {
+				table.setAttribute('class', 'highlight');
+			}
+		}
+	}
+
 	function init(event) {
 		CREATOR = io.github.crisstanza.ElementsCreator;
 		draw(CHORDS, KEYBOARDS);
 	}
 
-	function log() { console.log(arguments); }
-	function window_HashChange(event) { var hash = document.location.hash; }
-	function window_Load(event) { init(event); }
+	function window_HashChange(event) {
+		var hash = document.location.hash;
+		if (hash) {
+			highlightFromHash(hash.slice(1));
+		}
+	}
+
+	function window_Load(event) {
+		init(event);
+		window_HashChange(event);
+	}
+
+	function log() {
+		var length = arguments.length;
+		for (let i = 0 ; i < length ; i++) {
+			console.log(arguments[i]);
+		}
+	}
 
 	window.addEventListener('load', window_Load);
 	window.addEventListener('hashchange', window_HashChange);
