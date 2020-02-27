@@ -7,3 +7,7 @@ https://crisstanza.github.io/piano-chords-and-inversions/
 ## Browser Sync (nodejs)
 
 See the file .bashrc
+
+### MacOs
+
+Show hidden files: Command + Shift + .
