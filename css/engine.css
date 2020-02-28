@@ -59,6 +59,7 @@ td {
 td.note-name {
 	text-align: center;
 	padding-top: 5px;
+	padding-bottom: 10px;
 	letter-spacing: 15px;
 	font-size: 14pt;
 }
@@ -72,6 +73,6 @@ td.note-name span.blank {
 	bottom: -6px;
 }
 
-td.note-name span.italic {
+td.note-name span.root {
 	text-decoration: underline overline;
 }

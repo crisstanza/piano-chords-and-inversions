@@ -1,6 +1,6 @@
 var KEYBOARDS = [
-	"wbwbwwbwbwbw", "wbwbwwbwbwbwwbwbw", "wbwbwbwwbwbw",
-	"wbwbwbwwbwbwwbwbwbw"
+	'wbwbwwbwbwbw', 'wbwbwwbwbwbwwbwbw', 'wbwbwbwwbwbw', 'wbwbwbwwbwbwwbwbwbw',
+	'wbwbwwbwbwbwwbwbwwbwbwbwwbwbw', 'wbwbwbwwbwbwwbwbwbwwbwbwwbwbwbw', 'wbwbwwbwbwbwwbwbwwbwbwbw'
 ];
 
 var NOTES_BEMOL = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B' ];
@@ -88,7 +88,7 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 						let names = note > 0 ? NOTES_SHARP : NOTES_BEMOL;
 						note = Math.abs(note);
 						let noteName = names[note % 12];
-						let className = noteName[0] == root[0] ? 'bold' : '';
+						let className = noteName[0] == root[0] ? 'bold root' : '';
 						col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
 					}
 				}
