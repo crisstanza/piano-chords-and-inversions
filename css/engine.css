@@ -17,6 +17,7 @@ footer { padding-top: 10px; }
 
 footer.center, header.center { text-align: center; }
 
+h1.center { text-align: center; }
 .center { margin: auto; }
 div.center { text-align: center; }
 .github-icon { top: 2px; position: relative; opacity: 0.3; }
