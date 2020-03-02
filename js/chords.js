@@ -1,4 +1,4 @@
-var CHORDS = [
+var CHORDS_TMP = [
 	{
 		"chord": "C",
 		"notes": [
@@ -70,3 +70,9 @@ var CHORDS = [
 		"keyboards": [ 3, 1, 2 ]
 	}
 ];
+
+if (typeof CHORDS === 'undefined') {
+	var CHORDS = CHORDS_TMP;
+} else {
+	CHORDS = CHORDS.concat(CHORDS_TMP);
+}

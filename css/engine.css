@@ -50,6 +50,7 @@ td {
 	padding: 5px 20px 0 20px;
 	margin: 0;
 	text-align: center;
+	white-space: nowrap;
 }
 
 .bold {
@@ -75,4 +76,8 @@ td.note-name span.blank {
 
 td.note-name span.root {
 	text-decoration: underline overline;
+}
+
+div.spacer {
+	padding-top: 50px;
 }

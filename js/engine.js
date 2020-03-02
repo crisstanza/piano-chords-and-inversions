@@ -96,15 +96,22 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 		}
 	}
 
-	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength) {
+	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
 		for (let i = 0 ; i < notesLine.length ; i++) {
 			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
 			let keyboard = keyboards[chordKeyboards[keyboardIndex]];
-			let col = CREATOR.create('td', {}, bodyRow);
+			let inversionlabel = chordInversions ? chordInversions[keyboardIndex] : keyboardIndex + 1;
+			inversionlabel = inversionlabel ? '<i>' + inversionlabel + '.</i> ' : '';
+			let col = CREATOR.create('td', {}, bodyRow, inversionlabel);
 			let svg = CREATOR.create.svg('svg', {height: KEY_WHITE_HEIGHT + 2}, col);
 			drawKeyboard(keyboard, col, svg)
 			drawNotes(notesLine[i], keyboard, svg)
 		}
+	}
+
+	function drawSpacer() {
+		let br = CREATOR.create('div', { class: 'spacer' });
+		main.appendChild(br);
 	}
 
 	function drawChord(chord, keyboards) {
@@ -117,7 +124,7 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length);
+			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			drawNotesNameLine(chord.names, footRow, chord.chord[0], i, notesLine.length);
 		}
@@ -127,8 +134,14 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 	function draw(chords, keyboards) {
 		for (let i = 0 ; i < chords.length ; i++) {
 			let chord = chords[i];
-			let notes = chord.notes[0][0];
-			drawChord(chord, keyboards);
+			if (chord) {
+				if (chord.spacer) {
+					drawSpacer();
+				} else if (chord.notes) {
+					let notes = chord.notes[0][0];
+					drawChord(chord, keyboards);
+				}
+			}
 		}
 	}
 
@@ -144,9 +157,38 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 		}
 	}
 
+	function findChord(chordName, dictionary) {
+		let length = dictionary.length;
+		for (let i = 0 ; i < length ; i++) {
+			let chord = dictionary[i];
+			if (chord.chord == chordName) {
+				return chord;
+			}
+		}
+	}
+
+	function fixChordsSet(chordsSet, dictionary) {
+		let length = chordsSet.length;
+		for (let i = 0 ; i < length ; i++) {
+			let chord = chordsSet[i];
+			if (!chord.spacer) {
+				chordsSet[i] = findChord(chord.chord, dictionary);
+				chordsSet[i].inversions = chord.inversions;
+				chordsSet[i].spacer = chord.spacer;
+			}
+		}
+	}
+
 	function init(event) {
 		CREATOR = io.github.crisstanza.ElementsCreator;
-		draw(CHORDS, KEYBOARDS);
+		let chordsSet;
+		if (typeof CHORDS_SET === 'undefined') {
+			chordsSet = CHORDS;
+		} else {
+			chordsSet = CHORDS_SET;
+			fixChordsSet(chordsSet, CHORDS);
+		}
+		draw(chordsSet, KEYBOARDS);
 	}
 
 	function window_HashChange(event) {
