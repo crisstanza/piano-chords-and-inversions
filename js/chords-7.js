@@ -1,4 +1,4 @@
-var CHORDS = [
+var CHORDS_TMP = [
 	{
 		"chord": "C7",
 		"notes": [
@@ -22,7 +22,7 @@ var CHORDS = [
 		],
 		"names": [
 			[2, 6, 9, 0], [6, 9, 0, 2], [9, 0, 2, 6],
-			[0, 12, 6, 9], ['_', '_', '_', '_'], ['_', '_', '_', '_']
+			[0, 2, 6, 9], ['_', '_', '_', '_'], ['_', '_', '_', '_']
 		],
 		"keyboards": [
 			1, 2, 3,
@@ -105,3 +105,9 @@ var CHORDS = [
 		]
 	}
 ];
+
+if (typeof CHORDS === 'undefined') {
+	var CHORDS = CHORDS_TMP;
+} else {
+	CHORDS = CHORDS.concat(CHORDS_TMP);
+}

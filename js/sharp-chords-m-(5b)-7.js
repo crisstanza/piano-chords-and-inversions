@@ -1,4 +1,4 @@
-var CHORDS = [
+var CHORDS_TMP = [
 	{
 		"chord": "F#m(5b)/7",
 		"notes": [
@@ -15,3 +15,9 @@ var CHORDS = [
 		]
 	}
 ];
+
+if (typeof CHORDS === 'undefined') {
+	var CHORDS = CHORDS_TMP;
+} else {
+	CHORDS = CHORDS.concat(CHORDS_TMP);
+}

@@ -173,8 +173,10 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 			let chord = chordsSet[i];
 			if (!chord.spacer) {
 				chordsSet[i] = findChord(chord.chord, dictionary);
-				chordsSet[i].inversions = chord.inversions;
-				chordsSet[i].spacer = chord.spacer;
+				if (chordsSet[i]) {
+					chordsSet[i].inversions = chord.inversions;
+					chordsSet[i].spacer = chord.spacer;
+				}
 			}
 		}
 	}
