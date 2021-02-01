@@ -1,10 +1,19 @@
 var KEYBOARDS = [
-	'wbwbwwbwbwbw', 'wbwbwwbwbwbwwbwbw', 'wbwbwbwwbwbw', 'wbwbwbwwbwbwwbwbwbw',
-	'wbwbwwbwbwbwwbwbwwbwbwbwwbwbw', 'wbwbwbwwbwbwwbwbwbwwbwbwwbwbwbw', 'wbwbwwbwbwbwwbwbwwbwbwbw'
+	'wbwbwwbwbwbw',
+	'wbwbwwbwbwbwwbwbw',
+	'wbwbwbwwbwbw',
+	'wbwbwbwwbwbwwbwbwbw',
+	'wbwbwwbwbwbwwbwbwwbwbwbwwbwbw',
+	'wbwbwbwwbwbwwbwbwbwwbwbwwbwbwbw',
+	'wbwbwwbwbwbwwbwbwwbwbwbw',
+	'wbwbwbwwbwbwwbwbwbwwbwbw'
 ];
 
 var NOTES_BEMOL = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B' ];
 var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
+
+var NOTES_DOUBLE_BEMOL = [ 'Cb', 'Dbb', 'Db', 'Ebb', 'Eb', 'Fb', 'Gbb', 'Gb', 'Abb', 'Ab', 'Bbb', 'Bb' ];
+var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G##', 'A#', 'A##', 'B#' ];
 
 (function() {
 
@@ -85,10 +94,18 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 					if (note == '_') {
 						col.innerHTML += '<span class="blank">' + NOTE_NAME_BLANK + '</span> ';
 					} else {
-						let names = note > 0 ? NOTES_SHARP : NOTES_BEMOL;
-						note = Math.abs(note);
-						let noteName = names[note % 12];
-						let className = noteName[0] == root[0] ? 'bold root' : '';
+						let noteName, className;
+						if (note == '') {
+							noteName = '&nbsp;';
+							let className = '';
+						} else {
+							let notePositive = Math.abs(note);
+							let noteInt = Math.floor(notePositive);
+							let decimalPart = note % noteInt; 
+							let names = note > 0 ? decimalPart == 0 ? NOTES_SHARP : NOTES_DOUBLE_SHARP : decimalPart == 0 ? NOTES_BEMOL : NOTES_DOUBLE_BEMOL;
+							noteName = names[noteInt % 12];
+							className = noteName[0] == root[0] ? 'bold root' : '';
+						}
 						col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
 					}
 				}
@@ -109,14 +126,14 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 		}
 	}
 
-	function drawSpacer() {
-		let br = CREATOR.create('div', { class: 'spacer' });
-		main.appendChild(br);
+	function drawSpacer(type) {
+		let spacer = CREATOR.create('div', { class: type });
+		main.appendChild(spacer);
 	}
 
 	function drawChord(chord, keyboards) {
 		let notesColumns = chord.notes[0][0].length;
-		let table = CREATOR.create('table', { border: 0 });
+		let table = CREATOR.create('table', { border: 0, class: 'chord' });
 		let tHead = CREATOR.create('thead', {}, table);
 		let headRow = tHead.insertRow(0);
 		let headCol = CREATOR.create('th', {colspan: notesColumns}, headRow, chord.chord);
@@ -136,7 +153,7 @@ var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 
 			let chord = chords[i];
 			if (chord) {
 				if (chord.spacer) {
-					drawSpacer();
+					drawSpacer(chord.spacer.type);
 				} else if (chord.notes) {
 					let notes = chord.notes[0][0];
 					drawChord(chord, keyboards);

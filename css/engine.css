@@ -22,14 +22,16 @@ h1.center { text-align: center; }
 div.center { text-align: center; }
 .github-icon { top: 2px; position: relative; opacity: 0.3; }
 
-table {
-	margin: auto;
+div#main {
+	text-align: center;
 }
 
 table.highlight {
 	border: 1px solid gray;
 	background-color: aliceblue;
 }
+
+table.chord { display: inline; }
 
 /*
 @media not print {
@@ -76,9 +78,13 @@ td.note-name span.blank {
 }
 
 td.note-name span.root {
-	text-decoration: underline overline;
+	/* text-decoration: underline overline; */
 }
 
-div.spacer {
+div.space {
 	padding-top: 50px;
+}
+
+div.break-line {
+	padding-top: 5px;
 }
