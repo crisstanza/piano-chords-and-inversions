@@ -4,10 +4,21 @@ Piano Chords (and inversions)
 
 https://crisstanza.github.io/piano-chords-and-inversions/
 
+<br>
+
 ## Browser Sync (nodejs)
 
-See the file .bashrc
+### Install
 
-### MacOs
+	sudo npm install -g browser-sync
+
+### Usage
+
+	cd <PROJECT PATH>
+	browser-sync start --server --files **/*
+
+<br>
+
+## MacOS
 
 Show hidden files: Command + Shift + .
