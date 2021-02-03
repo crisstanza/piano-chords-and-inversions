@@ -113,12 +113,24 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 							let decimalPart = note % noteInt; 
 							let names = note > 0 ? decimalPart == 0 ? NOTES_SHARP : NOTES_DOUBLE_SHARP : decimalPart == 0 ? NOTES_BEMOL : NOTES_DOUBLE_BEMOL;
 							noteName = names[noteInt % 12];
-							className = noteName[0] == root[0] ? 'bold root' : '';
+							className = isRoot(noteName, root) ? 'bold root' : '';
 						}
 						col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
 					}
 				}
 			}
+		}
+	}
+
+	function isAccidental(noteName) {
+		return noteName[1] == 'b' || noteName[1] == '#';
+	}
+
+	function isRoot(noteName, root) {
+		if (isAccidental(root)) {
+			return noteName[0] == root[0] && noteName[1] == root[1];
+		} else {
+			return !isAccidental(noteName) && noteName[0] == root[0];
 		}
 	}
 
@@ -153,9 +165,18 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 			let notesLine = chord.notes[i];
 			drawNotesLine(notesLine, chord.fingers, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
-			drawNotesNameLine(chord.names, footRow, chord.chord[0], i, notesLine.length);
+			let root = getRoot(chord.chord);
+			drawNotesNameLine(chord.names, footRow, root, i, notesLine.length);
 		}
 		main.appendChild(table);
+	}
+
+	function getRoot(chord) {
+		let root = [chord[0]];
+		if (isAccidental(chord)) {
+			root.push(chord[1]);
+		}
+		return root.join('');
 	}
 
 	function draw(chords, keyboards) {

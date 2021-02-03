@@ -13,6 +13,7 @@ var CHORDS_TMP = [
 	{
 		"chord": "Gb6",
 		"notes": [ [ [1, 17, 20, 22] ] ],
+		"fingers": [ [4, 1, 3, 4] ],
 		"names": [ [-6, '', -10, -13, -15] ],
 		"keyboards": [7],
 		"inversions": ['']
@@ -20,6 +21,7 @@ var CHORDS_TMP = [
 	{
 		"chord": "Gbm6",
 		"notes": [ [ [1, 16, 20, 22] ] ],
+		"fingers": [ [4, 1, 3, 4] ],
 		"names": [ [-6, '', -10.1, -13, -15] ],
 		"keyboards": [7],
 		"inversions": ['']
