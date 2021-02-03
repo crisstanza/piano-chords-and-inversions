@@ -23,7 +23,7 @@ if (!io.github.crisstanza.ElementsCreator) io.github.crisstanza.ElementsCreator 
 		return element;
 	};
 
-	io.github.crisstanza.ElementsCreator.create.svg = function(name, attributes, parent) {
+	io.github.crisstanza.ElementsCreator.create.svg = function(name, attributes, parent, innerHTML) {
 		let element = document.createElementNS('http://www.w3.org/2000/svg', name);
 		if (attributes) {
 			for (var key in attributes) {
@@ -32,6 +32,9 @@ if (!io.github.crisstanza.ElementsCreator) io.github.crisstanza.ElementsCreator 
 		}
 		if (parent) {
 			parent.appendChild(element);
+		}
+		if (innerHTML) {
+			element.innerHTML = innerHTML;
 		}
 		return element;
 	};

@@ -29,15 +29,25 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 
 	let NOTE_NAME_BLANK = '____';
 
-	function drawNotes(notes, keyboard, svg) {
+	function drawFingerNumber(cx, cy, fingerNumber, svg) {
+		CREATOR.create.svg('text', {'text-anchor': 'middle', 'dominant-baseline': 'middle', x: cx, y: cy, 'font-size': '8pt', stroke: '#F7F4F1'}, svg, fingerNumber);
+	}
+
+	function drawNotes(notes, fingers, keyboard, svg) {
 		let delta = keyboard[0] == 'w' ? 0 : KEY_BLACK_WIDTH / 2;
 		let x;
+		let f = 0;
 		for (let i = 0, j = 0 ; i < keyboard.length ; i++) {
 			let key = keyboard[i];
 			if (key == 'w') {
 				x = 1 + delta + KEY_WHITE_WIDTH * j++;
+				let cx = x + KEY_WHITE_WIDTH / 2;
+				let cy = KEY_WHITE_HEIGHT - 12;
 				if (notes && notes.includes(i)) {
-					CREATOR.create.svg('circle', {cx: x + KEY_WHITE_WIDTH / 2, cy: KEY_WHITE_HEIGHT - 12, r: KEY_CURRENT_RADIUS, height: 90, stroke: '#222', fill: '#666', 'stroke-width': 1}, svg);
+					CREATOR.create.svg('circle', {cx: cx, cy: cy, r: KEY_CURRENT_RADIUS, height: 90, stroke: '#222', fill: '#666', 'stroke-width': 1}, svg);
+					if (fingers) {
+						drawFingerNumber(cx, cy, fingers[f++], svg);
+					}
 				}
 			}
 		}
@@ -47,8 +57,13 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 				j++;
 			} else if (key == 'b') {
 				x = 1 + delta + KEY_WHITE_WIDTH * j - KEY_BLACK_WIDTH / 2;
+				let cx = x + KEY_BLACK_WIDTH / 2;
+				let cy = KEY_BLACK_HEIGHT - 12;
 				if (notes && notes.includes(i)) {
-					CREATOR.create.svg('circle', {cx: x + KEY_BLACK_WIDTH / 2, cy: KEY_BLACK_HEIGHT - 12, r: KEY_CURRENT_RADIUS, height: 90, stroke: '#222', fill: '#666', 'stroke-width': 1}, svg);
+					CREATOR.create.svg('circle', {cx: cx, cy: cy, r: KEY_CURRENT_RADIUS, height: 90, stroke: '#222', fill: '#666', 'stroke-width': 1}, svg);
+					if (fingers) {
+						drawFingerNumber(cx, cy, fingers[f++], svg);
+					}
 				}
 			}
 		}
@@ -113,7 +128,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		}
 	}
 
-	function drawNotesLine(notesLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
+	function drawNotesLine(notesLine, fingersLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
 		for (let i = 0 ; i < notesLine.length ; i++) {
 			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
 			let keyboard = keyboards[chordKeyboards[keyboardIndex]];
@@ -122,7 +137,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 			let col = CREATOR.create('td', {}, bodyRow, inversionlabel);
 			let svg = CREATOR.create.svg('svg', {height: KEY_WHITE_HEIGHT + 2}, col);
 			drawKeyboard(keyboard, col, svg)
-			drawNotes(notesLine[i], keyboard, svg)
+			drawNotes(notesLine[i], fingersLine, keyboard, svg)
 		}
 	}
 
@@ -141,7 +156,8 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			drawNotesLine(notesLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
+			let fingersLine = chord.fingers ? chord.fingers[i] : null;
+			drawNotesLine(notesLine, fingersLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			drawNotesNameLine(chord.names, footRow, chord.chord[0], i, notesLine.length);
 		}
@@ -155,7 +171,6 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 				if (chord.spacer) {
 					drawSpacer(chord.spacer.type);
 				} else if (chord.notes) {
-					let notes = chord.notes[0][0];
 					drawChord(chord, keyboards);
 				}
 			}
