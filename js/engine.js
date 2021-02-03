@@ -30,7 +30,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 	let NOTE_NAME_BLANK = '____';
 
 	function drawFingerNumber(cx, cy, fingerNumber, svg) {
-		CREATOR.create.svg('text', {'text-anchor': 'middle', 'dominant-baseline': 'middle', x: cx, y: cy, 'font-size': '8pt', stroke: '#F7F4F1'}, svg, fingerNumber);
+		CREATOR.create.svg('text', {'text-anchor': 'middle', 'dominant-baseline': 'middle', x: cx, y: cy - 1, 'font-size': '9pt', 'font-family': 'cursive', stroke: '#F7F4F1'}, svg, fingerNumber);
 	}
 
 	function drawNotes(notes, fingers, keyboard, svg) {
@@ -49,12 +49,6 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 						drawFingerNumber(cx, cy, fingers[f++], svg);
 					}
 				}
-			}
-		}
-		for (let i = 0, j = 0 ; i < keyboard.length ; i++) {
-			let key = keyboard[i];
-			if (key == 'w') {
-				j++;
 			} else if (key == 'b') {
 				x = 1 + delta + KEY_WHITE_WIDTH * j - KEY_BLACK_WIDTH / 2;
 				let cx = x + KEY_BLACK_WIDTH / 2;
@@ -128,7 +122,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		}
 	}
 
-	function drawNotesLine(notesLine, fingersLine, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
+	function drawNotesLine(notesLine, fingers, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
 		for (let i = 0 ; i < notesLine.length ; i++) {
 			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
 			let keyboard = keyboards[chordKeyboards[keyboardIndex]];
@@ -137,7 +131,8 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 			let col = CREATOR.create('td', {}, bodyRow, inversionlabel);
 			let svg = CREATOR.create.svg('svg', {height: KEY_WHITE_HEIGHT + 2}, col);
 			drawKeyboard(keyboard, col, svg)
-			drawNotes(notesLine[i], fingersLine, keyboard, svg)
+			let fingersLine = fingers ? fingers[keyboardIndex] : null;
+			drawNotes(notesLine[i], fingersLine, keyboard, svg);
 		}
 	}
 
@@ -156,8 +151,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			let fingersLine = chord.fingers ? chord.fingers[i] : null;
-			drawNotesLine(notesLine, fingersLine, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
+			drawNotesLine(notesLine, chord.fingers, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			drawNotesNameLine(chord.names, footRow, chord.chord[0], i, notesLine.length);
 		}
