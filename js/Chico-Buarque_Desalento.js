@@ -44,6 +44,25 @@ var CHORDS_TMP = [
 		"names": [ [-8, '', -8, -13, 17] ],
 		"keyboards": [5],
 		"inversions": ['']
+	},
+	{
+		"chord": "Bbm(6)",
+		"notes": [ [ [2, 14, 20, 24] ] ],
+		"fingers": [ [4, 1, 2, 3] ],
+		"names": [ [7, '', 7, -13, 17] ],
+		"keyboards": [5],
+		"inversions": ['']
+	},
+	{
+		"chord": "Bbm(5+)",
+		"notes": [ [ [1, 13, 20, 24] ] ],
+		"fingers": [ [5, 1, 2, 3] ],
+		"names": [ [-6, '', -6, -13, 17] ],
+		"keyboards": [5],
+		"inversions": ['']
+	},
+	{
+		"spacer": { "type": "break-line" }
 	}
 ];
 
