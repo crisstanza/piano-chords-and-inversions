@@ -182,7 +182,10 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 	function draw(chords, keyboards) {
 		for (let i = 0 ; i < chords.length ; i++) {
 			let chord = chords[i];
-			if (chord) {
+			if (chord.globals) {
+				setGlobals(chord.chords, chord.globals);
+				draw(chord.chords, keyboards);
+			} else {
 				if (chord.spacer) {
 					drawSpacer(chord.spacer.type);
 				} else if (chord.notes) {
@@ -214,6 +217,16 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		}
 	}
 
+	function setGlobals(chords, globals) {
+		for (let i = 0 ; i < chords.length ; i++) {
+			let chord = chords[i];
+			if (!chord.inversions && globals.inversions)
+				chord.inversions = globals.inversions;
+			if (!chord.keyboards && globals.keyboards)
+				chord.keyboards = globals.keyboards;
+		}
+	}
+
 	function fixChordsSet(chordsSet, dictionary) {
 		let length = chordsSet.length;
 		for (let i = 0 ; i < length ; i++) {
@@ -230,14 +243,14 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 
 	function init(event) {
 		CREATOR = io.github.crisstanza.ElementsCreator;
-		let chordsSet;
+		let chords;
 		if (typeof CHORDS_SET === 'undefined') {
-			chordsSet = CHORDS;
+			chords = CHORDS;
 		} else {
-			chordsSet = CHORDS_SET;
-			fixChordsSet(chordsSet, CHORDS);
+			chords = CHORDS_SET;
+			fixChordsSet(chords, CHORDS);
 		}
-		draw(chordsSet, KEYBOARDS);
+		draw(chords, KEYBOARDS);
 	}
 
 	function window_HashChange(event) {
