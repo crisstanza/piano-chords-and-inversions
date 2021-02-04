@@ -68,6 +68,13 @@ var CHORDS_TMP = [
 				"fingers": [ [2, 1, 2, 3] ],
 				"names": [ [-10, '', 12, 4, 7] ],
 				"keyboards": [3],
+			},
+			{
+				"chord": "F(7)/A",
+				"notes": [ [ [4, 11, 16, 19] ] ],
+				"fingers": [ [3, 1, 2, 3] ],
+				"names": [ [-10, '', 12, 4, 7] ],
+				"keyboards": [7],
 			}
 		]
 	}
