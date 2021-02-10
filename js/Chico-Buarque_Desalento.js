@@ -39,7 +39,7 @@ var CHORDS_TMP = [
 				"keyboards": [5],
 			},
 			{
-				"chord": "Bbm(7)",
+				"chord": "Bbm(7m)",
 				"notes": [ [ [3, 15, 20, 24] ] ],
 				"fingers": [ [3, 1, 2, 3] ],
 				"names": [ [-8, '', -8, -13, 17] ],
@@ -70,11 +70,59 @@ var CHORDS_TMP = [
 				"keyboards": [3],
 			},
 			{
-				"chord": "F(7)/A",
+				"chord": "F(7m)/A",
 				"notes": [ [ [4, 11, 16, 19] ] ],
 				"fingers": [ [3, 1, 2, 3] ],
 				"names": [ [-10, '', 12, 4, 7] ],
 				"keyboards": [7],
+			},
+			{
+				"chord": "Gm(7m)(5-)",
+				"notes": [ [ [2, 12, 17, 20] ] ],
+				"fingers": [ [3, 1, 2, 3] ],
+				"names": [ [7, '', 5, -10, -1] ],
+				"keyboards": [7],
+			},
+			{
+				"chord": "C(7)(9m)",
+				"notes": [ [ [0, 7, 10, 13] ] ],
+				"fingers": [ [1, 1, 2, 3] ],
+				"names": [ [7, '', 5, -10, -1] ],
+				"keyboards": [1],
+			},
+			{
+				"spacer": { "type": "space" }
+			},
+			{
+				"chord": "F(6)",
+				"notes": [ [ [0, 9, 12, 16] ] ],
+				"fingers": [ [5, 1, 2, 3] ],
+				"names": [ [5, '', 2, 5, 9] ],
+				"keyboards": [3]
+			},
+			{
+				"chord": "C(7m)(13)",
+				"notes": [ [ [0, 16, 21, 22] ] ],
+				"fingers": [ [5, 1, 2, 3] ],
+				"names": [ [12, '', 4, 9, 8] ],
+				"keyboards": [6]
+			},
+			{
+				"chord": "C(7m)(13-)",
+				"notes": [ [ [0, 16, 20, 22] ] ],
+				"fingers": [ [5, 1, 2, 3] ],
+				"names": [ [12, '', 4, 9, 8] ],
+				"keyboards": [6]
+			},
+			{
+				"spacer": { "type": "space" }
+			},
+			{
+				"chord": "F(7M)",
+				"notes": [ [ [0, 11, 16, 19] ] ],
+				"fingers": [ [5, 1, 2, 3] ],
+				"names": [ [5, '', 4, 9, 12] ],
+				"keyboards": [7]
 			}
 		]
 	}
