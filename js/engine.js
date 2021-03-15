@@ -92,28 +92,45 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		}
 	}
 
-	function drawNotesNameLine(chordNotesName, footRow, root, inversionIndexPerLine, notesLineLength) {
-		for (let i = 0 ; i < notesLineLength ; i++) {
-			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
+	function drawNotesNameLine(chordNotesName, footRow, root, inversionIndexPerLine, notesLineLength, notes, keyboards) {
+		for (let j = 0 ; j < notesLineLength ; j++) {
+			let keyboardIndex = inversionIndexPerLine * notesLineLength + j;
 			if (keyboardIndex < chordNotesName.length) {
 				let notesName = chordNotesName[keyboardIndex];
 				let col = CREATOR.create('td', {class: 'note-name'}, footRow);
+				let k = 0;
 				for (let i = 0 ; i < notesName.length ; i++) {
 					let note = notesName[i];
 					if (note == '_') {
 						col.innerHTML += '<span class="blank">' + NOTE_NAME_BLANK + '</span> ';
 					} else {
 						let noteName, className;
-						if (note == '') {
+						if (note === '') {
 							noteName = '&nbsp;';
 							let className = '';
 						} else {
+							if (typeof note == 'string') {
+								let keyboard = keyboards[keyboardIndex];
+								let keyboardKeys = KEYBOARDS[keyboard];
+								let keyboardNotes = notes[keyboardIndex];
+								let keyboardNote = keyboardNotes[k];
+								let delta = keyboardKeys.startsWith('wbwbww') ? 0 : 5;
+								let autoNote = keyboardNote + delta;
+								if (note.endsWith('.1')) {
+									autoNote += 1.1;
+								}
+								if (note[0] == '-') {
+									autoNote *= -1;
+								}
+								note = autoNote;
+							}
 							let notePositive = Math.abs(note);
 							let noteInt = Math.floor(notePositive);
-							let decimalPart = note % noteInt; 
-							let names = note > 0 ? decimalPart == 0 ? NOTES_SHARP : NOTES_DOUBLE_SHARP : decimalPart == 0 ? NOTES_BEMOL : NOTES_DOUBLE_BEMOL;
+							let decimalPart = noteInt > 0 ? note % noteInt : 0;
+							let names = note >= 0 ? decimalPart == 0 ? NOTES_SHARP : NOTES_DOUBLE_SHARP : decimalPart == 0 ? NOTES_BEMOL : NOTES_DOUBLE_BEMOL;
 							noteName = names[noteInt % 12];
 							className = isRoot(noteName, root) ? 'bold root' : '';
+							k++;
 						}
 						col.innerHTML += '<span class="' + className + '">' + noteName + '</span> ';
 					}
@@ -166,7 +183,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 			drawNotesLine(notesLine, chord.fingers, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			let root = getRoot(chord.chord);
-			drawNotesNameLine(chord.names, footRow, root, i, notesLine.length);
+			drawNotesNameLine(chord.names, footRow, root, i, notesLine.length, notesLine, chord.keyboards);
 		}
 		main.appendChild(table);
 	}
@@ -224,6 +241,8 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 				chord.inversions = globals.inversions;
 			if (!chord.keyboards && globals.keyboards)
 				chord.keyboards = globals.keyboards;
+			if (!chord.names && globals.names)
+				chord.names = globals.names;
 		}
 	}
 
