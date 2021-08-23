@@ -1,4 +1,7 @@
-var KEYBOARDS = [
+let KEYBOARD_PARTS = [ 'wbwbw', 'wbwbwbw' ];
+
+// @Deprecated
+let KEYBOARDS = [
 	'wbwbwwbwbwbw',
 	'wbwbwwbwbwbwwbwbw',
 	'wbwbwbwwbwbw',
@@ -9,11 +12,11 @@ var KEYBOARDS = [
 	'wbwbwbwwbwbwwbwbwbwwbwbw'
 ];
 
-var NOTES_BEMOL = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B' ];
-var NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
+let NOTES_BEMOL = [ 'C', 'Db', 'D', 'Eb', 'E', 'F', 'Gb', 'G', 'Ab', 'A', 'Bb', 'B' ];
+let NOTES_SHARP = [ 'C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B' ];
 
-var NOTES_DOUBLE_BEMOL = [ 'Cb', 'Dbb', 'Db', 'Ebb', 'Eb', 'Fb', 'Gbb', 'Gb', 'Abb', 'Ab', 'Bbb', 'Bb' ];
-var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G##', 'A#', 'A##', 'B#' ];
+let NOTES_DOUBLE_BEMOL = [ 'Dbb', 'Db', 'Ebb', 'Eb', 'Fb', 'Gbb', 'Gb', 'Abb', 'Ab', 'Bbb', 'Bb', 'Cb' ];
+let NOTES_DOUBLE_SHARP = [ 'B#', 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G##', 'A#', 'A##' ];
 
 (function() {
 
@@ -110,14 +113,14 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 							let className = '';
 						} else {
 							if (typeof note == 'string') {
-								let keyboard = keyboards[keyboardIndex];
-								let keyboardKeys = KEYBOARDS[keyboard];
+								let keyboardId = keyboards[keyboardIndex];
+								let keyboardKeys = getKeyboardDefinition(keyboardId);
 								let keyboardNotes = notes[keyboardIndex];
 								let keyboardNote = keyboardNotes[k];
 								let delta = keyboardKeys.startsWith('wbwbww') ? 0 : 5;
 								let autoNote = keyboardNote + delta;
 								if (note.endsWith('.1')) {
-									autoNote += 1.1;
+									autoNote += 0.1;
 								}
 								if (note[0] == '-') {
 									autoNote *= -1;
@@ -151,10 +154,29 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		}
 	}
 
-	function drawNotesLine(notesLine, fingers, keyboards, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
+	function getKeyboardDefinition(keyboardId) {
+		if (typeof keyboardId == 'string')
+			return createKeyboardDefinition(keyboardId);
+		else
+			return KEYBOARDS[keyboardId];
+	}
+
+	function createKeyboardDefinition(keyboardId) {
+		let sb = [];
+		let startPart = keyboardId[0];
+		let halvesCount = keyboardId.substring(1) * 2;
+		let delta = startPart == 'C' ? 0 : 1;
+		for (let i = delta ; i < halvesCount + delta ; i++) {
+			sb.push(KEYBOARD_PARTS[i % 2]);
+		}
+		return sb.join('');
+	}
+
+	function drawNotesLine(notesLine, fingers, bodyRow, chordKeyboards, inversionIndexPerLine, notesLineLength, chordInversions) {
 		for (let i = 0 ; i < notesLine.length ; i++) {
 			let keyboardIndex = inversionIndexPerLine * notesLineLength + i;
-			let keyboard = keyboards[chordKeyboards[keyboardIndex]];
+			let keyboardId = chordKeyboards[keyboardIndex];
+			let keyboard = getKeyboardDefinition(keyboardId);
 			let inversionlabel = chordInversions ? chordInversions[keyboardIndex] : keyboardIndex + 1;
 			inversionlabel = inversionlabel ? '<i>' + inversionlabel + '.</i> ' : '';
 			let col = CREATOR.create('td', {}, bodyRow, inversionlabel);
@@ -170,7 +192,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		main.appendChild(spacer);
 	}
 
-	function drawChord(chord, keyboards) {
+	function drawChord(chord) {
 		let notesColumns = chord.notes[0][0].length;
 		let table = CREATOR.create('table', { border: 0, class: 'chord' });
 		let tHead = CREATOR.create('thead', {}, table);
@@ -180,7 +202,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		for (let i = 0 ; i < chord.notes.length ; i++) {
 			let bodyRow = tBody.insertRow(tBody.rows.length);
 			let notesLine = chord.notes[i];
-			drawNotesLine(notesLine, chord.fingers, keyboards, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
+			drawNotesLine(notesLine, chord.fingers, bodyRow, chord.keyboards, i, notesLine.length, chord.inversions);
 			let footRow = tBody.insertRow(tBody.rows.length);
 			let root = getRoot(chord.chord);
 			drawNotesNameLine(chord.names, footRow, root, i, notesLine.length, notesLine, chord.keyboards);
@@ -196,20 +218,24 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 		return root.join('');
 	}
 
-	function draw(chords, keyboards) {
+	function draw(chords) {
+		let count = 0;
 		for (let i = 0 ; i < chords.length ; i++) {
 			let chord = chords[i];
 			if (chord.globals) {
 				setGlobals(chord.chords, chord.globals);
-				draw(chord.chords, keyboards);
+				draw(chord.chords);
+				count += chord.chords.length;
 			} else {
 				if (chord.spacer) {
 					drawSpacer(chord.spacer.type);
 				} else if (chord.notes) {
-					drawChord(chord, keyboards);
+					drawChord(chord);
+					count++;
 				}
 			}
 		}
+		chordsCount.innerHTML = '(' + count + ')';
 	}
 
 	function highlightFromHash(chord) {
@@ -269,7 +295,7 @@ var NOTES_DOUBLE_SHARP = [ 'C#', 'C##', 'D#', 'D##', 'E#', 'F#', 'F##', 'G#', 'G
 			chords = CHORDS_SET;
 			fixChordsSet(chords, CHORDS);
 		}
-		draw(chords, KEYBOARDS);
+		draw(chords);
 	}
 
 	function window_HashChange(event) {

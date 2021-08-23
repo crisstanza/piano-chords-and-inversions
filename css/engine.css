@@ -22,6 +22,12 @@ h1.center { text-align: center; }
 div.center { text-align: center; }
 .github-icon { top: 2px; position: relative; opacity: 0.3; }
 
+h1 small {
+	font-size: 0.5em;
+	font-weight: normal;
+	font-style: italic;
+}
+
 div#main {
 	text-align: center;
 }
