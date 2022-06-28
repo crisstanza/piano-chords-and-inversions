@@ -6,6 +6,13 @@ https://crisstanza.github.io/piano-chords-and-inversions/
 
 <br>
 
+## Node and NPM
+
+	brew update
+	brew upgrade
+	brew install node
+
+
 ## Browser Sync (nodejs)
 
 ### Install
